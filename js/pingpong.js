@@ -27,9 +27,7 @@ function getRandomRange(min, max) {
 }
 
 function PingPong(canvas, context) {
-
 	var DIR_NONE = 0;
-
 	var DIR_LEFT = 1;
 	var DIR_RIGHT = 2;
 	var DIR_UP = 3;
@@ -62,6 +60,7 @@ function PingPong(canvas, context) {
 		// init paddles
 		this.player_paddle = new Paddle(PADDLE_INDENT, canvas.height / 2 - PADDLE_HEIGHT / 2, PADDLE_WIDTH, PADDLE_HEIGHT);
 		this.computer_paddle = new Paddle(canvas.width - PADDLE_INDENT - PADDLE_WIDTH, canvas.height / 2 - PADDLE_HEIGHT / 2, PADDLE_WIDTH, PADDLE_HEIGHT);
+		
 		// init ball
 		this.ball = new Ball(canvas.width / 2, canvas.height / 2, BALL_SIZE, BALL_SIZE, DIR_RIGHT, DIR_DOWN);
 
@@ -87,7 +86,6 @@ function PingPong(canvas, context) {
 			var ball_y = this.player_paddle.y + this.player_paddle.height / 2;
 			this.ball = new Ball(ball_x, ball_y, BALL_SIZE, BALL_SIZE, DIR_RIGHT, DIR_DOWN);
 		}
-
 
 		if (this.player_paddle.score >= 5) {
 			// you win
@@ -214,7 +212,6 @@ function PingPong(canvas, context) {
 		if (y < 0) y = 0;
 		if (y > canvas.height - this.player_paddle.height) y = canvas.height - this.player_paddle.height;
 		this.player_paddle.y = y;
-		//if (this.player_paddle.y > y) this.player_paddle.y
 	}
 
 }
