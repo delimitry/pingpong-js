@@ -1,0 +1,113 @@
+<html>
+<head>
+<title>Ping Pong</title>
+</head>
+<!--
+======================================================================
+JavaScript Ping Pong
+Author: delimitry
+======================================================================
+-->
+<body onload="checkCanvasIsSupported();" oncontextmenu="return false" style="background: #000">
+<script type="text/javascript" src="js/pingpong.js"></script>
+<canvas id="game_canvas" style="border: solid 1px #888;"></canvas><br/>
+
+<a style="color:white; font-family: arial; font-size: 12;">[Space] - Pause</a><br/>
+<a style="color:white; font-family: arial; font-size: 12;">[Up/Down] - Up/Down or Mouse</a><br/>
+<a style="color:white; font-family: arial; font-size: 12;">[N] - New game</a><br/>
+<a style="color:white; font-family: arial; font-size: 12;">[S] - Sound on/off</a><br/>
+
+<script type="text/javascript">
+
+var LEFT = 37;
+var UP = 38;
+var RIGHT = 39;
+var DOWN = 40;
+var SPACE = 32;
+var N = 78;
+var S = 83;
+
+
+var MOUSE_LEFT_BUTTON = 1;
+var MOUSE_MIDDLE_BUTTON = 2;
+var MOUSE_RIGHT_BUTTON = 3;
+
+var canvas;
+var context;
+var pingpong;
+
+function checkCanvasIsSupported() {
+	canvas = document.getElementById("game_canvas");
+	canvas.width = 320;
+	canvas.height = 240;	
+	if (canvas.getContext) {
+		context = canvas.getContext('2d');
+		pingpong = new PingPong(canvas, context);
+		pingpong.init();
+
+		render();
+		setInterval(render, 1000/60);
+	} else {
+		alert("Sorry, but your browser doesn't support a canvas.");
+	}
+}
+
+document.onmousedown = function(event) {
+	event = event || window.event;
+	switch (event.which) {
+		case MOUSE_LEFT_BUTTON:
+			break;
+		case MOUSE_MIDDLE_BUTTON:
+			break;
+		case MOUSE_RIGHT_BUTTON:			
+			return false;
+		 	break;
+		default: 
+			break; 		
+	}
+}
+
+document.onmousemove = function(event) {
+	pingpong.set_player_paddle_y(event.pageY);
+
+}
+
+
+document.onkeydown = function(event) {
+	var keyCode;
+	if (event == null) {
+		keyCode = window.event.keyCode; 
+	} else {
+		keyCode = event.keyCode; 
+	}
+	switch (keyCode) {
+		case UP:
+			pingpong.move_player_paddle_up();
+		 	break; 
+		case DOWN:
+			pingpong.move_player_paddle_down();
+		 	break;
+		case SPACE:
+			pingpong.toggle_pause();
+			break;
+		case N:
+			pingpong.init();
+			break;
+		case S:
+			pingpong.toggle_sound();
+			break;
+		default: 
+			break; 
+	} 
+}
+
+function render() {
+	context.clearRect(0, 0, canvas.width, canvas.height);
+	pingpong.update();
+	pingpong.draw();
+}
+
+</script>
+
+</body>
+</html>
